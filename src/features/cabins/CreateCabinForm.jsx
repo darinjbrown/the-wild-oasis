@@ -39,7 +39,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 				{ newCabinData: { ...data, image }, id: editId },
 				{
 					onSuccess: () => {
-						reset();
+						reset(data);
 					},
 				}
 			);
