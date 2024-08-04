@@ -1,17 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { doc } from 'prettier';
-import {
-	cloneElement,
-	createContext,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import { cloneElement, createContext, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 export const StyledModal = styled.div`
 	position: fixed;
@@ -85,21 +78,8 @@ function Open({ children, opens: opensWindowName }) {
 
 function Window({ children, name }) {
 	const { openName, close } = useContext(ModalContext);
-	const ref = useRef();
+	const ref = useOutsideClick(close, true);
 
-	useEffect(
-		function () {
-			function handleClick(event) {
-				if (ref.current && !ref.current.contains(event.target)) {
-					close();
-				}
-			}
-			document.addEventListener('click', handleClick, true);
-
-			return () => document.removeEventListener('click', handleClick);
-		},
-		[close]
-	);
 	if (name !== openName) return null;
 	return createPortal(
 		<Overlay>
