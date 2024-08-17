@@ -8,10 +8,15 @@ import Tag from '../../ui/Tag';
 import ButtonGroup from '../../ui/ButtonGroup';
 import Button from '../../ui/Button';
 import ButtonText from '../../ui/ButtonText';
+import Modal from '../../ui/Modal';
 
 import { useMoveBack } from '../../hooks/useMoveBack';
 import { useBooking } from './usBooking';
 import Spinner from '../../ui/Spinner';
+import { useNavigate } from 'react-router-dom';
+import { useCheckout } from '../../hooks/useCheckout';
+import { useDeleteBooking } from './useDeleteBooking';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const HeadingGroup = styled.div`
 	display: flex;
@@ -22,7 +27,13 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
 	const { booking, isLoading } = useBooking();
 
+	const { checkout, isCheckingOut } = useCheckout();
+
+	const { deleteBooking, isDeleting } = useDeleteBooking();
+
 	const moveBack = useMoveBack();
+
+	const navigate = useNavigate();
 
 	if (isLoading) {
 		return <Spinner />;
@@ -49,9 +60,45 @@ function BookingDetail() {
 			</Row>
 
 			<BookingDataBox booking={booking} />
-
 			<ButtonGroup>
-				<Button variation='secondary' onClick={moveBack}>
+				{status === 'unconfirmed' && (
+					<Button
+						variation='primary'
+						size='large'
+						onClick={() => navigate(`/checkin/${bookingId}`)}
+					>
+						Check in
+					</Button>
+				)}
+				{status === 'checked-in' && (
+					<Button
+						variation='primary'
+						size='large'
+						onClick={() => checkout({ bookingId })}
+						disabled={isCheckingOut}
+					>
+						Check out
+					</Button>
+				)}
+				<Modal>
+					<Modal.Open opens='delete'>
+						<Button variation='danger' size='large'>
+							Delete Booking
+						</Button>
+					</Modal.Open>
+					<Modal.Window name='delete'>
+						<ConfirmDelete
+							disabled={isDeleting}
+							resourceName='booking'
+							onConfirm={() =>
+								deleteBooking(bookingId, {
+									onSettled: moveBack,
+								})
+							}
+						/>
+					</Modal.Window>
+				</Modal>
+				<Button variation='secondary' size='large' onClick={moveBack}>
 					Back
 				</Button>
 			</ButtonGroup>
