@@ -28,6 +28,7 @@ const Guest = styled.div`
 
 function TodayItem({ activity }) {
 	const { id, status, guests, numNights } = activity;
+	console.log('activity', activity);
 
 	return (
 		<StyledTodayItem>
@@ -48,7 +49,7 @@ function TodayItem({ activity }) {
 					Check in
 				</Button>
 			)}
-			{status === 'checked-in' && <CheckoutButton bookingId={id} />}
+			{status === 'checked-in' && <CheckoutButton id={id} />}
 		</StyledTodayItem>
 	);
 }
