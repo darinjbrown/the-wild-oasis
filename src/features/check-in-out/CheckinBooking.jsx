@@ -11,7 +11,6 @@ import Button from '../../ui/Button';
 import ButtonText from '../../ui/ButtonText';
 import Spinner from '../../ui/Spinner';
 import Checkbox from '../../ui/Checkbox';
-import { format, set } from 'date-fns';
 import { formatCurrency } from '../../utils/helpers';
 import { useCheckin } from '../../hooks/useCheckin';
 import { useSettings } from '../settings/useSettings';
