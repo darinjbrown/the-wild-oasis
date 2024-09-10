@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from 'react';
@@ -88,6 +89,10 @@ function Toggle({ id }) {
 	const { open, close, openId, setPosition } = useContext(MenuContext);
 
 	function handleClick(e) {
+		console.log('click');
+
+		e.stopPropagation();
+
 		const rect = e.target.closest('button').getBoundingClientRect();
 		setPosition({
 			x: window.innerWidth - rect.width - rect.x,
@@ -105,7 +110,10 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
 	const { openId, position, close } = useContext(MenuContext);
-	const ref = useOutsideClick(close);
+	const ref = useOutsideClick(() => {
+		console.log('outside');
+		close();
+	}, false);
 
 	if (openId !== id) return null;
 	else
