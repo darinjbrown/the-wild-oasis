@@ -1,4 +1,3 @@
-import { max } from 'date-fns';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -8,7 +7,6 @@ import { useUpdateSetting } from './useUpdateSetting';
 
 function UpdateSettingsForm() {
 	const {
-		isLoading,
 		settings: {
 			minBookingLength,
 			maxBookingLength,

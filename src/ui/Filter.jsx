@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-import { set } from 'date-fns';
-import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
