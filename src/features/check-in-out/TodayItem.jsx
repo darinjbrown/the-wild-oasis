@@ -44,7 +44,6 @@ const Guest = styled.div`
 	font-weight: 500;
 	font-weight: 500;
 `;
-
 function TodayItem({ activity }) {
 	const { id, status, guests, numNights } = activity;
 	console.log('activity', activity);
